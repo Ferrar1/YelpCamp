@@ -6,11 +6,12 @@ var express    = require("express"),
     Comment    = require("./models/comment"),
     seedDb     = require("./seed")
 
-seedDb();
+
 mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
-
+app.use(express.static(__dirname + "/public"));
+seedDb();
 
 app.get("/", function(req,res){
    res.render("landing")
@@ -84,7 +85,7 @@ app.post("/campgrounds/:id/comments", function(req, res){
                            console.log(err);
                        } else {
                            console.log(campground);
-                           campground.comments.push(newComment_id);
+                           campground.comments.push(newComment._id);
                            campground.save();
                              res.redirect("/campgrounds/" + req.params.id);
                        }
