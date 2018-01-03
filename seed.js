@@ -28,30 +28,30 @@ function seedDb(){
         } else {
             console.log("removed"); 
         }
-        
-        // Add a few 
-        data.forEach(function(seed){
-           Campground.create(seed, function(err, newCampground){
-               if(err){
-                   console.log(err);
-               } else {
-                   console.log("Created")
-                   Comment.create({
-                       text: "This is a comment",
-                       author: "author"
-                   }, function(err, newComment){
-                       if(err){
-                           console.log(err);
-                       } else {
-                           newCampground.comments.push(newComment._id);
-                           newCampground.save();
-                           console.log("Create new comment");
+        //  // Add a few 
+        // data.forEach(function(seed){
+        //   Campground.create(seed, function(err, newCampground){
+        //       if(err){
+        //           console.log(err);
+        //       } else {
+        //           console.log("Created")
+        //           Comment.create({
+        //               text: "This is a comment",
+        //               author: "author"
+        //           }, function(err, newComment){
+        //               if(err){
+        //                   console.log(err);
+        //               } else {
+        //                   newCampground.comments.push(newComment._id);
+        //                   newCampground.save();
+        //                   console.log("Create new comment");
                          
-                       }
-                   })
-               }
-           }) 
-        });
+        //               }
+        //           })
+        //       }
+        //   }) 
+        // });
+       
     });
 
 }
