@@ -1,6 +1,7 @@
 var expree = require("express");
 var router = expree.Router();
 var Campground = require("../models/campground");
+var middlewareObj = require("../middleware");
 
 //index
 router.get("/", function(req,res){
@@ -15,7 +16,7 @@ router.get("/", function(req,res){
     
 });
 // create
-router.post("/",isLoggedIn, function(req, res) {
+router.post("/",middlewareObj.isLoggedIn, function(req, res) {
     var name = req.body.name;
     var image = req.body.image;
     var description = req.body.description;
@@ -36,7 +37,7 @@ router.post("/",isLoggedIn, function(req, res) {
     });
 });
 // new
-router.get("/new",isLoggedIn, function(req, res){
+router.get("/new",middlewareObj.isLoggedIn, function(req, res){
    res.render("campgrounds/new"); 
 });
 //show
@@ -52,15 +53,17 @@ router.get("/:id", function(req, res){
 });
 
 // Edit
-router.get("/:id/edit",checkOwener, function(req, res){
+router.get("/:id/edit",middlewareObj.checkCampgroundOwener, function(req, res){
     Campground.findById(req.params.id,function(err, campground){
+        if(err) res.redirect("/campgrounds");
+        else
             res.render("campgrounds/edit",{campground: campground}); 
     
     })
    
 });
 // update
-router.put("/:id",checkOwener,  function(req, res){
+router.put("/:id",middlewareObj.checkCampgroundOwener,  function(req, res){
     Campground.findByIdAndUpdate(req.params.id, req.body.campground,function(err, campground){
         if(err) res.redirect("/campgrounds");
         else{
@@ -70,37 +73,12 @@ router.put("/:id",checkOwener,  function(req, res){
 })
 
 // destroy
-router.delete("/:id",checkOwener,function(req,res){
+router.delete("/:id",middlewareObj.checkCampgroundOwener,function(req,res){
      Campground.findByIdAndRemove(req.params.id,function(err){
          if(err) res.redirect("/campgrounds");
          else res.redirect("/campgrounds");
      })
 })
 
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-function checkOwener(req, res, next){
-    if(req.isAuthenticated()){
-        Campground.findById(req.params.id,function(err, campground){
-            if(err) {
-                res.redirect("back")
-            } else{
-                //  matched?
-                if(campground.author.id.equals(req.user._id)) {
-                    next();
-                } else {
-                   res.redirect("back")
-                }
-            }
-        })
-    } else {
-         res.redirect("back")
-    }
-   
-}
 
 module.exports = router;
