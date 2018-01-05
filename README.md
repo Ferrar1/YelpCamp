@@ -1,9 +1,11 @@
 # YelpCamp Web on Node.js
-
+##Stacks: 
+<p>Node.js, Bootstrap, MongoDB, HTML5, CSS3, Express, Authentication, REST...</p>
 Here is the demo link: <a href="https://yelp-campings.herokuapp.com/">YelpCamp</a>
 <hr>
 Functionalities:
-<li>Log In & Log Out & Sign Up</li>
+<li>User Authentication</li>
+<li>Authorization</li>
 <li>Campgrounds CRUD</li>
 <li>Comments CRUD</li>
 <li>Welcome Page Animation</li>
