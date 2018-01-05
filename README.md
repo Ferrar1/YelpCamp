@@ -8,6 +8,7 @@ Functionalities:
 <li>Authorization</li>
 <li>Campgrounds CRUD</li>
 <li>Comments CRUD</li>
+<li>Database Associations</li>
 <li>Welcome Page Animation</li>
 <li>...</li>
 
